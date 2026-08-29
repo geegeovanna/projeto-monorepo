@@ -13,3 +13,18 @@ Content-Type: application/json
     "email": "jo@email.com",
     "senha_hash": "senhaf"
 }
+
+### Buscar usuario por ID
+GET http://localhost:3000/api/users/7
+
+### Atualizar usuario
+PUT http://localhost:3000/api/users/7
+Content-Type: application/json
+
+{
+    "nome": "Joana Silva",
+    "email": "joana@email.com"
+}
+
+### Excluir usuario
+DELETE http://localhost:3000/api/users/7

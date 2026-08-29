@@ -6,7 +6,7 @@ export class User extends Model {
     public nome!: string;
     public email!: string;
     public senha_hash!: string;
-    public readonly createAt!: Date;
+    public readonly createdAt!: Date;
     public readonly updateAt!: Date;
 }
 

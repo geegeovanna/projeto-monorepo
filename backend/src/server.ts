@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { sequelize } from './config/database';
 import { User } from './models/User';
+import { appRoutes } from './Routes';
 
 dotenv.config();
 
@@ -47,11 +48,14 @@ app.get('/api/users', async (req: Request, res: Response) => {
         });
 
         return res.status(200).json(usuarios);
-        
+
     } catch (error: any) {
         return res.status(500).json({erro: 'Erro ao listar usuarios.', detalhe: error.message})
     }
 })
+
+// Registra as rotas de usuarios sob o prefixo /api
+app.use('/api', appRoutes);
 
 async function main() {
     try {
