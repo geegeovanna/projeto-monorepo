@@ -17,7 +17,7 @@ export function authMiddleware(
 
     const token = authHeader.split(' ')[1];
 
-    // Valida a assinatura matemática do token com a chave secreta
+    // Valida a assinatura matematica do token com a chave secreta
     const usuarioDecodificado = jwt.verify(token, JWT_SECRET);
 
     // Salva os dados do usuario na requisição

@@ -3,13 +3,12 @@ import bcrypt from 'bcryptjs';
 import { User } from '../models/User';
 
 export class UserController {
-  // GET /API/USERS - Lista todos os usuários
+  // GET /api/users - Lista todos os usuários
   public static async index(req: Request, res: Response): Promise<Response> {
     try {
       const users = await User.findAll({
         attributes: ['id', 'nome', 'email', 'createdAt', 'updatedAt'],
       });
-
       return res.status(200).json(users);
     } catch (error: any) {
       return res
@@ -18,18 +17,18 @@ export class UserController {
     }
   }
 
-  // GET /API/USERS/:ID - Busca um usuario por ID
+  // GET /api/users/:id - Busca um usuario por ID
   public static async show(req: Request, res: Response): Promise<Response> {
     try {
       const id = parseInt(req.params.id as string, 10);
       if (isNaN(id) || id <= 0) {
         return res
           .status(400)
-          .json({ errp: 'O ID informado deve ser um número válido' });
+          .json({ erro: 'O ID informado deve ser um numero valido.' });
       }
 
-      const user = await User.findByPk(Number(id), {
-        attributes: ['id', 'nome', 'email', 'createdAt', 'updatedAt'],
+      const user = await User.findByPk(id, {
+        attributes: ['id', 'nome', 'email', 'createdAt'],
       });
 
       if (!user) {
@@ -40,17 +39,17 @@ export class UserController {
     } catch (error: any) {
       return res
         .status(500)
-        .json({ erro: 'Erro ao listar usuários', detalhe: error.message });
+        .json({ erro: 'Erro ao buscar usuário', detalhe: error.message });
     }
   }
 
-  // POST /API/USERS/ - Busca um usuario por
+  // POST /api/users - Cadastrar um novo usuário
   public static async create(req: Request, res: Response): Promise<Response> {
     try {
       const { nome, email, password } = req.body;
 
-      if (!nome || typeof nome !== 'string' || nome.trim() == '') {
-        return res.status(400).json({ erro: 'Os campos nome é obrigatório.' });
+      if (!nome || typeof nome !== 'string' || nome.trim() === '') {
+        return res.status(400).json({ erro: 'O campo nome é obrigatório.' });
       }
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -58,12 +57,10 @@ export class UserController {
         return res.status(400).json({ erro: 'Informe um e-mail valido.' });
       }
 
-      // EMAIL
-
       if (!password || typeof password !== 'string' || password.length < 6) {
         return res
           .status(400)
-          .json({ erro: 'A senha deve conter no minímo 6 caracteres.' });
+          .json({ erro: 'A senha deve conter no minimo 6 caracteres.' });
       }
 
       const userExistente = await User.findOne({
@@ -72,7 +69,7 @@ export class UserController {
       if (userExistente) {
         return res
           .status(400)
-          .json({ erro: 'Já esxite um usuário cadastrado nesse e-mail.' });
+          .json({ erro: 'Já existe um usuário cadastrado com este e-mail.' });
       }
 
       const senha_hash = await bcrypt.hash(password, 10);
@@ -92,33 +89,32 @@ export class UserController {
     } catch (error: any) {
       return res
         .status(500)
-        .json({ erro: 'Erro ao cadastrar usuários', detalhe: error.message });
+        .json({ erro: 'Erro ao cadastrar usuário', detalhe: error.message });
     }
   }
 
-  // PUT /API/USERS/:ID - Atualiza o usuário existente
+  // PUT /api/users/:id - Atualiza um usuário existente
   public static async update(req: Request, res: Response): Promise<Response> {
     try {
       const id = parseInt(req.params.id as string, 10);
       if (isNaN(id) || id <= 0) {
         return res
           .status(400)
-          .json({ errp: 'O ID informado deve ser um número válido' });
+          .json({ erro: 'O ID informado deve ser um numero valido.' });
       }
-
       const { nome, email } = req.body;
 
-      const user = await User.findByPk(Number(id));
+      const user = await User.findByPk(id);
 
       if (!user) {
-        return res.status(404).json({ erro: 'Usuário não encontrado' });
+        return res.status(404).json({ erro: 'Usuário não encontrado.' });
       }
 
       if (nome !== undefined) {
         if (typeof nome !== 'string' || nome.trim() === '') {
           return res
             .status(404)
-            .json({ erro: ' O campo nome debe ser um texto valdo.' });
+            .json({ erro: 'O campo nome deve ser um texto valido.' });
         }
 
         user.nome = nome.trim();
@@ -127,7 +123,7 @@ export class UserController {
       if (email != undefined) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email.trim())) {
-          return res.status(400).json({ erro: 'Informe o e-mail válido.' });
+          return res.status(400).json({ erro: 'Informe um e-mail valido.' });
         }
 
         const emailEmUso = await User.findOne({
@@ -142,11 +138,11 @@ export class UserController {
 
       await user.save();
 
-      return res.status(201).json({
+      return res.status(200).json({
         id: user.id,
         nome: user.nome,
         email: user.email,
-        creatadAt: user.createdAt,
+        createdAt: user.createdAt,
       });
     } catch (error: any) {
       return res
@@ -155,30 +151,30 @@ export class UserController {
     }
   }
 
-  // `PUT /api/users/:id - Deleta um usuário existente
+  // DELETE /api/users/:id - Remove um usuário
   public static async delete(req: Request, res: Response): Promise<Response> {
     try {
       const id = parseInt(req.params.id as string, 10);
       if (isNaN(id) || id <= 0) {
         return res
           .status(400)
-          .json({ errp: 'O ID informado deve ser um número válido' });
+          .json({ erro: 'O ID informado deve ser um numero valido.' });
       }
 
       const user = await User.findByPk(id);
 
       if (!user) {
-        return res.status(404).json({ erro: 'Usuário não encontrado' });
+        return res.status(404).json({ erro: 'Usuário não encontrado.' });
       }
 
       await user.destroy();
 
-      //204 No Content
+      // 204 No Content
       return res.status(204).send();
     } catch (error: any) {
       return res
         .status(500)
-        .json({ erro: 'Erro ao excluir o usuário', detalhe: error.message });
+        .json({ erro: 'Erro ao excluir usuário', detalhe: error.message });
     }
   }
 }

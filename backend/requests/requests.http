@@ -4,27 +4,27 @@ GET http://localhost:3000/api/health
 ### Listar Usuarios
 GET http://localhost:3000/api/users
 
-### Criar usuario
+### Criar Usuario
 POST http://localhost:3000/api/users
 Content-Type: application/json
 
 {
-    "nome": "Fernanda",
-    "email": "fefe@email.com",
-    "password": "1234567"
+    "nome": "Mariana Souza",
+    "email": "mariana.souza@email.com",
+    "password": "12345678"
 }
 
-### Buscar usuario por ID
-GET http://localhost:3000/api/users/7
+### Buscar Usuario por ID
+GET http://localhost:3000/api/users/1
 
-### Atualizar usuario
-PUT http://localhost:3000/api/users/7
+### Atualizar Usuario
+PUT http://localhost:3000/api/users/1
 Content-Type: application/json
 
 {
-    "nome": "Joana Silva",
-    "email": "joana@email.com"
+  "nome": "Mariana Souza Silva",
+  "email": "mariana.silva@email.com"
 }
 
-### Excluir usuario
-DELETE http://localhost:3000/api/users/7
+### Excluir Usuario
+DELETE http://localhost:3000/api/users/1

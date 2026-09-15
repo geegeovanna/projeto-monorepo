@@ -1,16 +1,17 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './docs/swagger.json';
 import { sequelize } from './config/database';
-import { User } from './models/User';
-import { appRoutes } from './Routes';
+import { appRoutes } from './routes';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middlewares
+// Middewares
 app.use(cors());
 app.use(express.json());
 
@@ -19,47 +20,14 @@ app.get('/api/health', (req: Request, res: Response) => {
   res.status(200).json({
     status: 'OK',
     mensagem: 'Servidor Backend rodando com sucesso.',
-    timeStamp: new Date().toISOString(),
+    timestamp: new Date().toISOString(),
   });
 });
 
-// Cadastrar os usuarios
-app.post('/api/users', async (req: Request, res: Response) => {
-  try {
-    const { nome, email, senha_hash } = req.body;
+// Rota da documentação interativa
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-    if (!nome || !email || !senha_hash) {
-      return res
-        .status(400)
-        .json({ erro: 'nome, email e senha_hash são obrigatórios.' });
-    }
-
-    const novoUsuario = await User.create({ nome, email, senha_hash });
-
-    return res.status(201).json(novoUsuario);
-  } catch (error: any) {
-    return res
-      .status(500)
-      .json({ erro: 'Erro ao cadastrar usuario.', detalhe: error.message });
-  }
-});
-
-// Listar todos os usuarios
-app.get('/api/users', async (req: Request, res: Response) => {
-  try {
-    const usuarios = await User.findAll({
-      attributes: ['id', 'nome', 'email', 'createdAt'],
-    });
-
-    return res.status(200).json(usuarios);
-  } catch (error: any) {
-    return res
-      .status(500)
-      .json({ erro: 'Erro ao listar usuarios.', detalhe: error.message });
-  }
-});
-
-// Registra as rotas de usuarios sob o prefixo /api
+// Registra todas as rotas da aplicacao sob o prefixo /api
 app.use('/api', appRoutes);
 
 async function main() {
@@ -70,11 +38,11 @@ async function main() {
     app.listen(PORT, () => {
       console.log(`Servidor rodando na porta ${PORT}`);
       console.log(
-        `Health Check disponível em: http://localhost:${PORT}/api/health`,
+        `Heath Check disponivel em: http://localhost:${PORT}/api/health`,
       );
     });
   } catch (error) {
-    console.log('Erro ao conectar como banco de dados', error);
+    console.log('Erro ao conectar com o banco de dados: ', error);
   }
 }
 

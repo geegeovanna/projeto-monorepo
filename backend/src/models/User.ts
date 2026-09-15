@@ -7,7 +7,7 @@ export class User extends Model {
   declare email: string;
   declare senha_hash: string;
   declare readonly createdAt: Date;
-  declare readonly updateAt: Date;
+  declare readonly updatedAt: Date;
 }
 
 User.init(
