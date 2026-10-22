@@ -7,7 +7,7 @@ export function useAuth(): AuthContextType {
 
   if (!context) {
     throw new Error(
-      "useAuth deve ser utilizado obrigatóriamente dentro de um <AuthProvider>",
+      "useAuth deve ser utilizado obrigatoriamente dentro de um <AuthProvider>",
     );
   }
 

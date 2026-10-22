@@ -2,8 +2,9 @@
 
 ## Teste Skip ci
 
-![Status do CI](https://github.com/i-davies/projeto-monorepo/actions/workflows/ci.yml/badge.svg)
+![Status do CI](https://github.com/geegeovanna/projeto-monorepo/actions/workflows/ci.yml/badge.svg)
 
+81c8f4fc8fcd6592cecd767ef2b4da6e0b2335b8
 ## Como rodar o projeto
 
 ### Rodando com pnpm (local)
@@ -31,18 +32,18 @@ pnpm sequelize-cli db:migrate
 
 ### Raiz do monorepo (`package.json`)
 
-| Comando                 | Descrição                         |
-| ----------------------- | --------------------------------- |
+| Comando | Descrição |
+| --- | --- |
 | `pnpm docker:build-api` | Builda a imagem Docker do backend |
-| `pnpm docker:build-app` | Builda a imagem Docker do app     |
-| `pnpm compose:up`       | Sobe os containers em background  |
-| `pnpm compose:down`     | Derruba os containers             |
-| `pnpm compose:logs`     | Acompanha os logs dos containers  |
+| `pnpm docker:build-app` | Builda a imagem Docker do app |
+| `pnpm compose:up` | Sobe os containers em background |
+| `pnpm compose:down` | Derruba os containers |
+| `pnpm compose:logs` | Acompanha os logs dos containers |
 
 ### Backend (`backend/package.json`)
 
-| Comando      | Descrição                                       |
-| ------------ | ----------------------------------------------- |
-| `pnpm dev`   | Sobe o servidor em modo desenvolvimento (watch) |
-| `pnpm build` | Compila o TypeScript para `dist/`               |
+| Comando | Descrição |
+| --- | --- |
+| `pnpm dev` | Sobe o servidor em modo desenvolvimento (watch) |
+| `pnpm build` | Compila o TypeScript para `dist/` |
 | `pnpm start` | Roda o servidor já compilado (`dist/server.js`) |

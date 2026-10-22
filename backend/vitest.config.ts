@@ -10,29 +10,28 @@ export default defineConfig({
       // Define o provedor nativo V8
       provider: 'v8',
 
-      // Define onde os relatórios HTML e LCOV serão salvos
-      reportsDirectory: 'coverage',
+      // Diretório onde os relatórios HTML e LCOV serão salvos
+      reportsDirectory: './coverage',
 
       // Padrões de arquivos incluídos na análise de cobertura
       include: ['src/**/*.ts'],
 
       // Arquivos e pastas que devem ser desconsiderados
       exclude: [
-        'src/**/*.test.ts', 
+        'src/**/*.test.ts',
         'src/**/*.spec.ts',
-        'src/migrations/**',
         'src/types/**',
         'src/server.ts',
+        'src/migrations/**',
       ],
 
-      // Definição de limites mínimos obrigatórios (Quality Gate Local)
+      // Definição de limites mínimos obrigatórios (Quality Gate local)
       thresholds: {
         lines: 80,
         functions: 80,
         branches: 75,
-        statements: 80,
-      },
-
+        statements: 80
+      }
     },
   },
 });

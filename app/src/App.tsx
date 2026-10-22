@@ -15,7 +15,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* O AppLayout envolverá todas as rotas filhas declaradas aqui dentro */}
+        {/* O AppLayout envolvera todas as rotas filhas declaradas aqui dentro */}
         <Route element={<AppLayout />}>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />
