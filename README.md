@@ -4,7 +4,6 @@
 
 ![Status do CI](https://github.com/geegeovanna/projeto-monorepo/actions/workflows/ci.yml/badge.svg)
 
-81c8f4fc8fcd6592cecd767ef2b4da6e0b2335b8
 ## Como rodar o projeto
 
 ### Rodando com pnpm (local)

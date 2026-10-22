@@ -43,8 +43,12 @@ describe('config/database.ts', () => {
     const { sequelize } = await import('./database');
 
     expect(sequelize.getDialect()).toBe('postgres');
-    expect(sequelize.config.dialectOptions).toHaveProperty('ssl');
-    expect(sequelize.config.dialectOptions.ssl).toEqual({
+
+    const dialectOptions = sequelize.config.dialectOptions as
+      { ssl?: unknown } | undefined;
+
+    expect(dialectOptions).toHaveProperty('ssl');
+    expect(dialectOptions?.ssl).toEqual({
       require: true,
       rejectUnauthorized: false,
     });
