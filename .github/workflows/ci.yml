@@ -13,18 +13,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  validar-monorepo:
-    name: Validar Backend, Frontend e Docker
+    validar-build-docker:
+    name: 2. Validação de Build do Docker
+    needs: [validacoes-e-testes]
     runs-on: ubuntu-latest
 
     steps:
-      - name: 1. Baixar o codigo fonte
+      - name: 1. Checkout do Código
         uses: actions/checkout@v4
 
-      - name: 2. Habilitar o pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 11
+      - name: 2. Testar se o Dockerfile Compila sem Erros
+        run: |
+          docker build -t api-service:smoke-test ./backend
 
       - name: 3. Configurar o Node.js 24 com Cache de Dependencias
         uses: actions/setup-node@v4
