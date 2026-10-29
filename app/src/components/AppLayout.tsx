@@ -1,6 +1,6 @@
 // src/components/AppLayout.tsx
-import { Outlet, Link } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
+import { Outlet, Link } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 export function AppLayout() {
   const { user, logout } = useAuth();
@@ -11,13 +11,25 @@ export function AppLayout() {
         <div className="flex items-center gap-6">
           <span className="font-bold text-slate-800">Sistema Web</span>
           <nav className="flex gap-4 text-sm font-medium text-slate-600">
-            <Link to="/dashboard" className="hover:text-blue-600 transition-colors">Painel</Link>
-            <Link to="/perfil" className="hover:text-blue-600 transition-colors">Perfil</Link>
+            <Link
+              to="/dashboard"
+              className="hover:text-blue-600 transition-colors"
+            >
+              Painel
+            </Link>
+            <Link
+              to="/perfil"
+              className="hover:text-blue-600 transition-colors"
+            >
+              Perfil
+            </Link>
           </nav>
         </div>
 
         <div className="flex items-center gap-4 text-sm">
-          <span className="text-slate-600 font-medium">{user?.nome || user?.email}</span>
+          <span className="text-slate-600 font-medium">
+            {user?.nome || user?.email}
+          </span>
           <button
             onClick={logout}
             className="text-red-600 hover:text-red-700 font-medium transition-colors"
